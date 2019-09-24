@@ -60,7 +60,6 @@ pipeline {
 		    steps {
 		        //sshScript remote: remote, script: "abc.sh"  	
 			sshPut remote: remote1, from: 'target/java-maven-1.0-SNAPSHOT.war', into: '/root/tomcat8/webapps'
-'
 			
 		    }
     	}
