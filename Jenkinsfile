@@ -16,7 +16,7 @@ pipeline {
 		        label 'slave'
 		    }
 		    steps {
-			    git 'https://github.com/Parameshwar89/Maven-Java-Project'
+			    git 'https://github.com/venkat09docs/Maven-Java-Project.git'
 			    stash 'Source'
 			    script{
 			        mvnHome = tool 'maven3.6'
@@ -59,8 +59,8 @@ pipeline {
 		    //SCP-Publisher Plugin (Optional)
 		    steps {
 		        //sshScript remote: remote, script: "abc.sh"  	
-			sshPut remote: remote1, from: 'target/java-maven-1.0-SNAPSHOT.war', into: '/root/tomcat8/webapps'
-			}
+			sshPut remote: remote, from: 'target/java-maven-1.0-SNAPSHOT.war', into: '/root/tomcat8/webapps'		        
+		    }
     	}
     	stage ('Integration-Test') {
 			agent {
@@ -96,13 +96,11 @@ pipeline {
 			steps {
 				unstash 'Source'
 				sh "'${mvnHome}/bin/mvn' clean package"				
-			        sshPut remote: remote2, from: 'target/java-maven-1.0-SNAPSHOT.war', into: '/root/tomcat8/webapps'
-			      }
+			}
 			post {
 				always {
 					archiveArtifacts '**/*.war'
 				}
-	             
 			}
 		}
     	
